@@ -33,11 +33,15 @@ export function findTask(store, id) {
   return store.tasks.find((task) => task.id === id);
 }
 
-/** id의 할 일을 완료 처리하고 돌려준다. 없으면 Error를 던진다. */
-export function completeTask(store, id) {
+/**
+ * id의 할 일을 완료 처리하고 돌려준다. 없으면 Error를 던진다.
+ * doneOn("YYYY-MM-DD" 문자열)을 주면 완료 날짜로 기록한다(이미 있으면 새 값으로 바꾼다).
+ */
+export function completeTask(store, id, doneOn) {
   const task = findTask(store, id);
   if (!task) throw notFound(id);
   task.done = true;
+  if (doneOn !== undefined) task.doneOn = doneOn;
   return task;
 }
 
